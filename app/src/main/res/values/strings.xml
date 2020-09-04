@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">memory_kotlin</string>
+    <string name="app_name">Memory</string>
+    <string name="term_1day">1day</string>
+    <string name="term_3day">3day</string>
+    <string name="term_7day">7day</string>
+    <string name="term_1month">1month</string>
+    <string name="today">Today</string>
+    <string name="create">登録</string>
+    <string name="random">ランダム</string>
+    <string name="random_name">数字ランダム表示</string>
+    <string name="random_start">Start</string>
+    <string name="taskCreate">Create</string>
+    <string name="taskCreated">登録しました。</string>
+    <string name="randomCreate">Random</string>
+    <string name="randomCreated">設定しました。</string>
+    <string name="OK">OK</string>
+    <string name="random_create_btn">設定</string>
+    <string name="big_small_check">大小が正しくありません。</string>
+    <string name="history">登録履歴</string>
+    <string name="histories">履歴</string>
 </resources>
