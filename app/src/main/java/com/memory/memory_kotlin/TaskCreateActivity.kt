@@ -20,6 +20,9 @@ class TaskCreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_create)
 
+        Realm.init(this)
+        mRealm = Realm.getDefaultInstance()
+
         btToday.setOnClickListener{onCommonButtonClick(it)}
         btCreate.setOnClickListener{onCommonButtonClick(it)}
         btCreateExe.setOnClickListener{onCreateTaskButtonClick(it)}
