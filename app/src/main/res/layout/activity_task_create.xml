@@ -35,7 +35,6 @@
             android:id="@+id/btCreateExe"
             android:layout_width="150dp"
             android:layout_height="80dp"
-            android:onClick="onCreateButtonClick"
             app:bootstrapBrand="info"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="50dp"
