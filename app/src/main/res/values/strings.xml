@@ -18,4 +18,7 @@
     <string name="big_small_check">大小が正しくありません。</string>
     <string name="history">登録履歴</string>
     <string name="histories">履歴</string>
+    <string name="input_no_char_error">文字を入力してください。</string>
+    <string name="added_task">追加しました</string>
+
 </resources>

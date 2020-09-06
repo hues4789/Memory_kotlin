@@ -23,22 +23,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-        <com.beardedhen.androidbootstrap.BootstrapEditText
-            android:id="@+id/newTask"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:textSize="20dp"
-            android:height="100sp"
-            />
-        <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/btCreateExe"
-            android:layout_width="150dp"
-            android:layout_height="80dp"
-            app:bootstrapBrand="info"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="50dp"
-            android:text="@string/create" />
+            <TextView
+                android:id="@+id/errorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:textSize="20dp"
+                android:textColor="@color/colorRed"
+                />
+            <EditText
+                android:id="@+id/newTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                />
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/btCreateExe"
+                android:layout_width="150dp"
+                android:layout_height="80dp"
+                app:bootstrapBrand="info"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/create" />
         </LinearLayout>
     </ScrollView>
     <!-- 下メニュー -->

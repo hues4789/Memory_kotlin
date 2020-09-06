@@ -28,7 +28,7 @@ class TaskCreateActivity : AppCompatActivity() {
         btCreateExe.setOnClickListener{onCreateTaskButtonClick(it)}
     }
 
-    fun onCommonButtonClick(view: View?){
+    private fun onCommonButtonClick(view: View?){
         if(view != null) {
             when (view.id) {
                 R.id.btToday -> {
@@ -44,7 +44,7 @@ class TaskCreateActivity : AppCompatActivity() {
     }
 
 //task作成
-    fun create(task:String){
+private fun create(task:String){
         mRealm.executeTransaction {
             var tasks = mRealm.createObject(Tasks::class.java , UUID.randomUUID().toString())
             tasks.learnContext = task
@@ -52,12 +52,16 @@ class TaskCreateActivity : AppCompatActivity() {
         }
     }
 
-    fun onCreateTaskButtonClick(view: View?){
+    private fun onCreateTaskButtonClick(view: View?){
         if(view != null) {
+            if(newTask.text.toString().isEmpty()) {
+                errorText.text = getText(R.string.input_no_char_error)
+                return
+            }
             //DB登録
             create(newTask.text.toString())
 
-            Snackbar.make(view,"追加しました",Snackbar.LENGTH_SHORT)
+            Snackbar.make(view,getText(R.string.added_task),Snackbar.LENGTH_SHORT)
                 .setAction("戻る"){finish()}
                 .setActionTextColor(Color.YELLOW)
                 .show()
