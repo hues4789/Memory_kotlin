@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
 
         if(user != null){
-            val intent = Intent(this, TodayToDoTaskActivity::class.java)
+            val intent = Intent(this, TodayToDoTaskLoginActivity::class.java)
             startActivity(intent)
         }
 
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(emailText, passText)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
-                                val intent = Intent(this, TodayToDoTaskActivity::class.java)
+                                val intent = Intent(this, TodayToDoTaskLoginActivity::class.java)
                                 startActivity(intent)
                             } else {
                                 Toast.makeText(
