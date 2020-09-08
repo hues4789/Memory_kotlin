@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import io.realm.Realm
-import kotlinx.android.synthetic.main.activity_main.btCreate
-import kotlinx.android.synthetic.main.activity_main.btToday
 import kotlinx.android.synthetic.main.activity_task_create.*
 import java.util.*
 import com.google.android.material.snackbar.Snackbar
@@ -32,7 +30,7 @@ class TaskCreateActivity : AppCompatActivity() {
         if(view != null) {
             when (view.id) {
                 R.id.btToday -> {
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, TodayToDoTaskActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.btCreate -> {

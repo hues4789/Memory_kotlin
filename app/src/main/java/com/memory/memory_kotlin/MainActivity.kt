@@ -3,61 +3,101 @@ package com.memory.memory_kotlin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_task_create.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mRealm : Realm
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Realm.init(this)
-        mRealm = Realm.getDefaultInstance()
+        auth = FirebaseAuth.getInstance()
 
-        val read = readList()
+        val user = FirebaseAuth.getInstance().currentUser
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        if(user != null){
+            val intent = Intent(this, TodayToDoTaskActivity::class.java)
+            startActivity(intent)
+        }
 
-        //RecyclerViewのAdapter、layouｔなどの設定
-        val adapter = Adapter(this, read, true)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        SignUpButton.setOnClickListener {
 
-        btToday.setOnClickListener{onCommonButtonClick(it)}
-        btCreate.setOnClickListener{onCommonButtonClick(it)}
+            val emailEditText = emailEditText
+            val emailText = emailEditText.text.toString()
+
+            val passEditText = passEditText
+            val passText = passEditText.text.toString()
+
+            auth.createUserWithEmailAndPassword(emailText, passText)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        onLoginButtonClick(it)
+                    } else {
+                        Toast.makeText(
+                            baseContext, "SignUp 失敗",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
+
+        btNoLogin.setOnClickListener{onLoginButtonClick(it)}
+        SignUpButton.setOnClickListener{onLoginButtonClick(it)}
+        LoginButton.setOnClickListener{onLoginButtonClick(it)}
     }
 
-    fun onCommonButtonClick(view: View?){
+    fun onLoginButtonClick(view: View?){
         if(view != null) {
             when (view.id) {
-                R.id.btToday -> {
-                    val intent = Intent(this, MainActivity::class.java)
+                R.id.btNoLogin -> {
+                    val intent = Intent(this, TodayToDoTaskActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.btCreate -> {
-                    val intent = Intent(this, TaskCreateActivity::class.java)
+                R.id.LoginButton -> {
+                    //Todo funを分ける
+                    val emailText = emailEditText.text.toString()
+
+                    val passText = passEditText.text.toString()
+
+                    if(emailText.isEmpty() || passText.isEmpty()){
+                        if(emailText.isEmpty()){
+                            emailEditText.setError(getString(R.string.input_mail))
+                        }
+                        if(passText.isEmpty()){
+                            passEditText.setError(getString(R.string.input_pass))
+                        }
+                        return
+                    }
+
+                    auth.signInWithEmailAndPassword(emailText, passText)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                val intent = Intent(this, TodayToDoTaskActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(
+                                    baseContext, "Login 失敗",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                }
+                R.id.SignUpButton -> {
+                    val intent = Intent(this, SignUpActivity::class.java)
                     startActivity(intent)
                 }
             }
         }
     }
-
-    fun readList(): RealmResults<Tasks> {
-        return mRealm.where(Tasks::class.java).findAll()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mRealm.close()
-    }
-
-
 }

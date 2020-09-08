@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "410527326528",
+    "firebase_url": "https://memory-c30dd.firebaseio.com",
+    "project_id": "memory-c30dd",
+    "storage_bucket": "memory-c30dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410527326528:android:bc83f0b43f5512a7a2daa5",
+        "android_client_info": {
+          "package_name": "com.memory.memory_kotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410527326528-7f01ivlsnbbd5ubg5jo5qigphek09eil.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvb_9RKgXACZxw_WAmqsfVDlCBtK4Ls7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410527326528-7f01ivlsnbbd5ubg5jo5qigphek09eil.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

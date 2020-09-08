@@ -20,5 +20,15 @@
     <string name="histories">履歴</string>
     <string name="input_no_char_error">文字を入力してください。</string>
     <string name="added_task">追加しました</string>
+    <string name="e_mail">メールアドレス</string>
+    <string name="password">パスワード</string>
+    <string name="signup">新規登録</string>
+    <string name="signup_button">登録</string>
+    <string name="login">ログイン</string>
+    <string name="no_login_btn">ログインせずに使用する</string>
+    <string name="confirm_password">確認用パスワード</string>
+    <string name="input_mail">メールアドレスを入力してください.</string>
+    <string name="input_pass">パスワードを入力してください。</string>
+    <string name="dif_pass">パスワードと確認用パスワードが異なります。</string>
 
 </resources>
