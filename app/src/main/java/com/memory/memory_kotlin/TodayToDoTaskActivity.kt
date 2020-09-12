@@ -3,6 +3,9 @@ package com.memory.memory_kotlin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +13,7 @@ import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_today_to_do_task.*
+import org.w3c.dom.Text
 
 class TodayToDoTaskActivity : AppCompatActivity() {
 
@@ -17,6 +21,9 @@ class TodayToDoTaskActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.title = getString(R.string.today)
+
         setContentView(R.layout.activity_today_to_do_task)
 
         Realm.init(this)
@@ -31,24 +38,6 @@ class TodayToDoTaskActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-
-        btToday.setOnClickListener{onCommonButtonClick(it)}
-        btCreate.setOnClickListener{onCommonButtonClick(it)}
-    }
-
-    fun onCommonButtonClick(view: View?){
-        if(view != null) {
-            when (view.id) {
-                R.id.btToday -> {
-                    val intent = Intent(this, TodayToDoTaskActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.btCreate -> {
-                    val intent = Intent(this, TaskCreateActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-        }
     }
 
     fun readList(): RealmResults<Tasks> {

@@ -18,6 +18,8 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        supportActionBar?.title = getString(R.string.signup)
+
         auth = FirebaseAuth.getInstance()
 
         signUpButton.setOnClickListener{onLoginButtonClick(it)}

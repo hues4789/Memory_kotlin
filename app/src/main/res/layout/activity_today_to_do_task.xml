@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/today"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+    
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -26,45 +21,12 @@
             android:layout_weight="1"
             android:dividerHeight="1dp" />
     </ScrollView>
-    <!-- 下メニュー -->
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <!-- 共通ボタン-->
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.memory.memory_kotlin.CommonButtonFragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.02"
-        android:baselineAligned="false"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/btToday"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_marginRight="1dp"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_today"
-            app:bootstrapBrand="secondary"
-            android:text="@string/today"/>
-
-        <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/btCreate"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_margin="0dp"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_add"
-            app:bootstrapBrand="secondary"
-            android:text="@string/create"
-            />
-        <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/brRandom"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_margin="0dp"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_random"
-            app:bootstrapBrand="secondary"
-            android:text="@string/random"
-            />
-    </LinearLayout>
+        tools:layout="@layout/fragment_common_button" />
     <!-- 画面下部に固定で表示されるレイアウト -->
 </LinearLayout>

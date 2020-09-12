@@ -16,29 +16,15 @@ class TaskCreateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.title = getString(R.string.create)
+
         setContentView(R.layout.activity_task_create)
 
         Realm.init(this)
         mRealm = Realm.getDefaultInstance()
 
-        btToday.setOnClickListener{onCommonButtonClick(it)}
-        btCreate.setOnClickListener{onCommonButtonClick(it)}
         btCreateExe.setOnClickListener{onCreateTaskButtonClick(it)}
-    }
-
-    private fun onCommonButtonClick(view: View?){
-        if(view != null) {
-            when (view.id) {
-                R.id.btToday -> {
-                    val intent = Intent(this, TodayToDoTaskActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.btCreate -> {
-                    val intent = Intent(this, TaskCreateActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-        }
     }
 
 //task作成

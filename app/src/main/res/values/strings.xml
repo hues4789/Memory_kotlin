@@ -25,6 +25,7 @@
     <string name="signup">新規登録</string>
     <string name="signup_button">登録</string>
     <string name="login">ログイン</string>
+    <string name="logout">ログアウト</string>
     <string name="no_login_btn">ログインせずに使用する</string>
     <string name="confirm_password">確認用パスワード</string>
     <string name="input_mail">メールアドレスを入力してください.</string>
