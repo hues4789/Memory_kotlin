@@ -30,78 +30,12 @@ class MainActivity : AppCompatActivity() {
 
         user = FirebaseAuth.getInstance().currentUser
 
-        if(user != null){
+        if(user == null){
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }else{
             val intent = Intent(this, TodayToDoTaskLoginActivity::class.java)
             startActivity(intent)
-        }
-
-        SignUpButton.setOnClickListener {
-
-            val emailEditText = emailEditText
-            val emailText = emailEditText.text.toString()
-
-            val passEditText = passEditText
-            val passText = passEditText.text.toString()
-
-            auth.createUserWithEmailAndPassword(emailText, passText)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        onLoginButtonClick(it)
-                    } else {
-                        Toast.makeText(
-                            baseContext, "SignUp 失敗",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-        }
-
-        btNoLogin.setOnClickListener{onLoginButtonClick(it)}
-        SignUpButton.setOnClickListener{onLoginButtonClick(it)}
-        LoginButton.setOnClickListener{onLoginButtonClick(it)}
-    }
-
-    fun onLoginButtonClick(view: View?){
-        if(view != null) {
-            when (view.id) {
-                R.id.btNoLogin -> {
-                    val intent = Intent(this, TodayToDoTaskActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.LoginButton -> {
-                    //Todo funを分ける
-                    val emailText = emailEditText.text.toString()
-
-                    val passText = passEditText.text.toString()
-
-                    if(emailText.isEmpty() || passText.isEmpty()){
-                        if(emailText.isEmpty()){
-                            emailEditText.error = getString(R.string.input_mail)
-                        }
-                        if(passText.isEmpty()){
-                            passEditText.error = getString(R.string.input_pass)
-                        }
-                        return
-                    }
-
-                    auth.signInWithEmailAndPassword(emailText, passText)
-                        .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                val intent = Intent(this, TodayToDoTaskLoginActivity::class.java)
-                                startActivity(intent)
-                            } else {
-                                Toast.makeText(
-                                    baseContext, "Login 失敗",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                }
-                R.id.SignUpButton -> {
-                    val intent = Intent(this, SignUpActivity::class.java)
-                    startActivity(intent)
-                }
-            }
         }
     }
 }

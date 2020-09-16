@@ -9,6 +9,7 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_task_create.*
 import java.util.*
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
 
 class TaskCreateActivity : AppCompatActivity() {
 
@@ -28,10 +29,12 @@ class TaskCreateActivity : AppCompatActivity() {
     }
 
 //task作成
-private fun create(task:String){
+private fun create(task:String,detailsTask:String){
         mRealm.executeTransaction {
             var tasks = mRealm.createObject(Tasks::class.java , UUID.randomUUID().toString())
             tasks.learnContext = task
+            tasks.learn_details = detailsTask
+            tasks.remember_date = formatNowDate()
             mRealm.copyToRealm(tasks)
         }
     }
@@ -43,8 +46,7 @@ private fun create(task:String){
                 return
             }
             //DB登録
-            create(newTask.text.toString())
-
+            create(newTask.text.toString(),detailsTask.text.toString())
             Snackbar.make(view,getText(R.string.added_task),Snackbar.LENGTH_SHORT)
                 .setAction("戻る"){finish()}
                 .setActionTextColor(Color.YELLOW)
@@ -55,5 +57,12 @@ private fun create(task:String){
     override fun onDestroy() {
         super.onDestroy()
         mRealm.close()
+    }
+
+    //現在日付成形
+    fun formatNowDate():String{
+        val formatDate = SimpleDateFormat("yyyy/MM/dd")
+        val date = Date()
+        return formatDate.format(date).toString()
     }
 }

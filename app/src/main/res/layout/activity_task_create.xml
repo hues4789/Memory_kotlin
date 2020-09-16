@@ -26,20 +26,29 @@
                 android:textSize="20dp"
                 android:textColor="@color/colorRed"
                 />
+
             <EditText
                 android:id="@+id/newTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
-                />
+                android:hint="@string/remember_task"/>
+
+            <EditText
+                android:id="@+id/detailsTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:hint="@string/answer"/>
+
             <com.beardedhen.androidbootstrap.BootstrapButton
                 android:id="@+id/btCreateExe"
                 android:layout_width="150dp"
                 android:layout_height="80dp"
-                app:bootstrapBrand="info"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="50dp"
-                android:text="@string/create" />
+                android:text="@string/create"
+                app:bootstrapBrand="info" />
 
 
         </LinearLayout>

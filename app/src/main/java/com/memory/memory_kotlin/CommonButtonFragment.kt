@@ -69,13 +69,14 @@ class CommonButtonFragment : Fragment() {
         super.onStart()
         btToday.setOnClickListener{onCommonButtonClick(it)}
         btCreate.setOnClickListener{onCommonButtonClick(it)}
+        btHistory.setOnClickListener{onCommonButtonClick(it)}
     }
 
     private fun onCommonButtonClick(view: View?){
         if(view != null) {
             if(activity != null) {
                 //login画面の場合
-                if (activity!!.localClassName == "TodayToDoTaskLoginActivity" || activity!!.localClassName == "TaskCreateLoginActivity") {
+                if (activity!!.localClassName == "TodayToDoTaskLoginActivity" || activity!!.localClassName == "TaskCreateLoginActivity" || activity!!.localClassName == "HistoryLoginActivity") {
                     when (view.id) {
                         R.id.btToday -> {
                             val intent = Intent(activity, TodayToDoTaskLoginActivity::class.java)
@@ -83,6 +84,10 @@ class CommonButtonFragment : Fragment() {
                         }
                         R.id.btCreate -> {
                             val intent = Intent(activity, TaskCreateLoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                        R.id.btHistory -> {
+                            val intent = Intent(activity, HistoryLoginActivity::class.java)
                             startActivity(intent)
                         }
                     }
@@ -95,6 +100,10 @@ class CommonButtonFragment : Fragment() {
                         }
                         R.id.btCreate -> {
                             val intent = Intent(activity, TaskCreateActivity::class.java)
+                            startActivity(intent)
+                        }
+                        R.id.btHistory -> {
+                            val intent = Intent(activity, HistoryActivity::class.java)
                             startActivity(intent)
                         }
                     }

@@ -8,18 +8,27 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TaskCreateLoginActivity"></activity>
-        <activity android:name=".TodayToDoTaskLoginActivity"></activity>
+        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".HistoryLoginActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".TaskCreateLoginActivity" />
+        <activity android:name=".TodayToDoTaskLoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".TodayToDoTaskActivity" />
         <activity android:name=".TaskCreateActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

@@ -15,11 +15,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.list_item.view.*
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
-class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHolder.ItemClickListener {
+class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.ItemClickListener  {
 
     private lateinit var auth: FirebaseAuth
     private var currentUser: FirebaseUser? = null
@@ -30,7 +27,7 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportActionBar?.title = getString(R.string.today)
+        supportActionBar?.title = getString(R.string.histories)
 
         auth = FirebaseAuth.getInstance()
         currentUser = FirebaseAuth.getInstance().currentUser
@@ -41,17 +38,11 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
 
         val loginId = auth.uid.toString()
 
-        //振り返り日付間隔
-        val beforeDays :MutableList<Int> = arrayListOf(-1,-3,-7,-14)
-        //振り返り日付生成
-        val remindDate = dateFormat(beforeDays)
-
         //DB取得
         val db = FirebaseFirestore.getInstance()
         db.collection("Tasks")
             .whereEqualTo("login_user",loginId)
-            .whereIn("remember_date",remindDate)
-                //降順
+            //降順
             .orderBy(TasksFirebase::created_at.name, Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener {
@@ -69,7 +60,7 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
             }
     }
 
-    override fun onItemClick(view:View,position:Int){
+    override fun onItemClick(view: View, position:Int){
         if(view.create_dt.text.isEmpty()){
             view.task.text = taskList[position].learnContext
 
@@ -100,23 +91,5 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
             }
             else -> return super.onOptionsItemSelected(item)
         }
-    }
-//振り返り日付生成
-    fun dateFormat(beforeDays :MutableList<Int>) :MutableList<String>{
-
-        val remindDateList:MutableList<String> = ArrayList()
-
-        val formatDate = SimpleDateFormat("yyyy/MM/dd")
-        val date = Date()
-        val calendar = Calendar.getInstance()
-        calendar.time = date
-
-        beforeDays.forEach{ beforeDay ->
-            calendar.add(Calendar.DATE, beforeDay)
-            val remindDate = calendar.time
-            remindDateList.add(formatDate.format(remindDate).toString())
-        }
-
-        return remindDateList
     }
 }

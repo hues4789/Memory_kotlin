@@ -8,13 +8,33 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class TaskLoginRecyclerAdapter(private val context: Context,
-                               private val itemClickListener: TodayToDoTaskLoginActivity,
+                               private val itemClickListener: TaskLoginRecyclerViewHolder.ItemClickListener,
                                private val List: MutableList<TasksFirebase>
 )
     : RecyclerView.Adapter<TaskLoginRecyclerViewHolder>() {
 
+    private var mRecyclerView : RecyclerView? = null
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        mRecyclerView = recyclerView
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        mRecyclerView = null
+
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskLoginRecyclerViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
+
+        view.setOnClickListener { view ->
+            mRecyclerView?.let {
+                itemClickListener.onItemClick(view, it.getChildAdapterPosition(view))
+            }
+        }
+
         return TaskLoginRecyclerViewHolder(view)
     }
 

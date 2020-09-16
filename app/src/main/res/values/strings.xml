@@ -31,5 +31,6 @@
     <string name="input_mail">メールアドレスを入力してください.</string>
     <string name="input_pass">パスワードを入力してください。</string>
     <string name="dif_pass">パスワードと確認用パスワードが異なります。</string>
-
+    <string name="answer">詳細/答え</string>
+    <string name="remember_task">タスク/問題</string>
 </resources>

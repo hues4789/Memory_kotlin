@@ -11,6 +11,8 @@ open class Tasks (
     @PrimaryKey open var id :String = UUID.randomUUID().toString(),
     //requiredは必須という意味
     @Required open var learnContext : String = "",
+    open var learn_details: String = "",
+    open var remember_date: String = "",
     open var created_at: Date = Date(),
     open var update_at: Date = Date()
     ) : RealmObject()

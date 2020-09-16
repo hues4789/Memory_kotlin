@@ -23,6 +23,15 @@
             android:drawableTop="@drawable/ic_today"
             android:text="@string/today"
             app:bootstrapBrand="secondary" />
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/btHistory"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_history"
+            android:text="@string/histories"
+            app:bootstrapBrand="secondary" />
 
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/btCreate"
