@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/layout_main"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical">
+
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:dividerHeight="1dp"
+    android:fillViewport="true"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+
+        <EditText
+            android:id="@+id/FromNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_weight="1"
+            android:hint="@string/from"
+            android:inputType="number"
+            android:maxLength="3"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/ToFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/fromTo"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/ToNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="64dp"
+            android:layout_weight="1"
+            android:hint="@string/to"
+            android:inputType="number"
+            android:maxLength="3"
+            android:textAlignment="center" />
+    </LinearLayout>
+        <Button
+            android:id="@+id/btRandomStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginTop="32dp"
+            android:background="@color/design_default_color_primary_variant"
+            android:text="@string/Start"
+            android:textColor="@color/design_default_color_background" />
+       <TextView
+            android:id="@+id/RandomNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:textSize="200dp" />
+    </LinearLayout>
+
+
+</ScrollView>
+<!-- 共通ボタン-->
+<fragment
+    android:id="@+id/fragment"
+    android:name="com.memory.memory_kotlin.CommonButtonFragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout="@layout/fragment_common_button" />
+<!-- 画面下部に固定で表示されるレイアウト -->
+</LinearLayout>

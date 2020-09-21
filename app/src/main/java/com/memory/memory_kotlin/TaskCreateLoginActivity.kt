@@ -1,10 +1,13 @@
 package com.memory.memory_kotlin
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -29,36 +32,40 @@ class TaskCreateLoginActivity : AppCompatActivity(){
         auth = FirebaseAuth.getInstance()
         currentUser = FirebaseAuth.getInstance().currentUser
 
+        //戻る
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         supportActionBar?.title = getString(R.string.create)
 
         setContentView(R.layout.activity_task_create)
 
-        btCreateExe.setOnClickListener{onCommonButtonClick(it)}
+        btCreateExe.setOnClickListener{onCreateButtonClick(it)}
     }
 
-    fun onCommonButtonClick(view: View?) {
+    fun onCreateButtonClick(view: View?) {
         if (view != null) {
-            when (view.id) {
-
-                R.id.btCreateExe -> {
-                    if(newTask.text.toString().isEmpty()){
-                        newTask.error = getString(R.string.input_no_char_error)
-                        return
-                    }
-
-                    val task = newTask.text.toString()
-                    val detail = detailsTask.text.toString()
-
-                    val db = FirebaseFirestore.getInstance()
-                    val user = TasksFirebase(task,detail,auth.uid.toString(),formatNowDate())
-                    db.collection("Tasks")
-                        //document->プライマリーキーみたいな感じ
-                        .document()
-                        .set(user)
-                        .addOnSuccessListener {Toast.makeText(applicationContext,"送信完了",Toast.LENGTH_LONG).show()}
-                        .addOnFailureListener { Toast.makeText(applicationContext,"送信失敗",Toast.LENGTH_LONG).show() }
-                }
+            if(newTask.text.toString().isEmpty()){
+                newTask.error = getString(R.string.input_no_char_error)
+                return
             }
+
+            val task = newTask.text.toString()
+            val detail = detailsTask.text.toString()
+
+            val db = FirebaseFirestore.getInstance()
+            val user = TasksFirebase(task,detail,auth.uid.toString(),formatNowDate())
+            db.collection("Tasks")
+                .document()
+                .set(user)
+                .addOnSuccessListener {Toast.makeText(applicationContext,getText(R.string.added_task),Toast.LENGTH_LONG).show()
+
+                    //キーボードを閉じる
+                    hideKeyboard(view)
+
+                    //入力欄を空にする
+                    newTask.setText("", TextView.BufferType.NORMAL)
+                    detailsTask.setText("", TextView.BufferType.NORMAL)}
+                .addOnFailureListener { Toast.makeText(applicationContext,"失敗",Toast.LENGTH_LONG).show() }
         }
     }
 
@@ -80,6 +87,10 @@ class TaskCreateLoginActivity : AppCompatActivity(){
                 startActivity(intent)
                 return true
             }
+            android.R.id.home ->{
+                finish()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -89,5 +100,13 @@ class TaskCreateLoginActivity : AppCompatActivity(){
         val formatDate = SimpleDateFormat("yyyy/MM/dd")
         val date = Date()
        return formatDate.format(date).toString()
+    }
+
+    //キーボードを閉じる
+    private fun hideKeyboard(view:View?) {
+        if(view != null) {
+            val manager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }

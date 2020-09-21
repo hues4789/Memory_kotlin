@@ -35,6 +35,9 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
         auth = FirebaseAuth.getInstance()
         currentUser = FirebaseAuth.getInstance().currentUser
 
+        //戻る
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         setContentView(R.layout.activity_today_to_do_task)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
@@ -42,7 +45,7 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
         val loginId = auth.uid.toString()
 
         //振り返り日付間隔
-        val beforeDays :MutableList<Int> = arrayListOf(-1,-3,-7,-14)
+        val beforeDays :MutableList<Int> = arrayListOf(-1,-3,-7,-14,-31)
         //振り返り日付生成
         val remindDate = dateFormat(beforeDays)
 
@@ -96,6 +99,10 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
                 currentUser = null
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
+                return true
+            }
+            android.R.id.home ->{
+                finish()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)

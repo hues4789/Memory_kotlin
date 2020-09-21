@@ -5,10 +5,16 @@
     <application
         android:name=".BootStrap"
         android:allowBackup="true"
+        android:icon="@drawable/ic_pencil"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HistoryActivity"></activity>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1135677094589057~4982897664"/>
+        <activity android:name=".RandomLoginActivity"></activity>
+        <activity android:name=".RandomActivity" />
+        <activity android:name=".HistoryActivity" />
         <activity android:name=".HistoryLoginActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".TaskCreateLoginActivity" />

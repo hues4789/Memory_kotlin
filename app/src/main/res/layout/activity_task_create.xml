@@ -1,64 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_main"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-
-    <ScrollView
-        android:layout_width="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/newTask"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:dividerHeight="1dp"
-        android:fillViewport="true"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/errorText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:textSize="20dp"
-                android:textColor="@color/colorRed"
-                />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:hint="@string/remember_task"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxLength="225"/>
 
-            <EditText
-                android:id="@+id/newTask"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:hint="@string/remember_task"/>
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorRed"
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="-68dp"
+        tools:layout_editor_absoluteY="16dp" />
 
-            <EditText
-                android:id="@+id/detailsTask"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:hint="@string/answer"/>
+    <EditText
+        android:id="@+id/detailsTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:hint="@string/answer"
+        android:textSize="20dp"
+        android:maxLength="225"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newTask" />
 
-            <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/btCreateExe"
-                android:layout_width="150dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="50dp"
-                android:text="@string/create"
-                app:bootstrapBrand="info" />
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/btCreateExe"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="64dp"
+        android:text="@string/create"
+        android:textSize="24sp"
+        app:bootstrapBrand="info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailsTask" />
 
 
-        </LinearLayout>
-    </ScrollView>
-    <!-- 下メニュー -->
     <fragment
         android:id="@+id/fragment"
         android:name="com.memory.memory_kotlin.CommonButtonFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_common_button" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout="@layout/fragment_common_button"
+        tools:layout_editor_absoluteX="0dp" />
     <!-- 画面下部に固定で表示されるレイアウト -->
-</LinearLayout>
+<!--
+</LinearLayout>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

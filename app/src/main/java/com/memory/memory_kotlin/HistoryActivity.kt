@@ -1,20 +1,19 @@
 package com.memory.memory_kotlin
 
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.realm.OrderedRealmCollection
-import io.realm.Realm
-import io.realm.RealmList
-import io.realm.RealmResults
+import io.realm.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class HistoryActivity : AppCompatActivity(),Adapter.ViewHolder.ItemClickListener{
@@ -23,14 +22,15 @@ class HistoryActivity : AppCompatActivity(),Adapter.ViewHolder.ItemClickListener
 
     var read: OrderedRealmCollection<Tasks> = RealmList()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         supportActionBar?.title = getString(R.string.histories)
 
         setContentView(R.layout.activity_today_to_do_task)
+
+        //戻る
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         Realm.init(this)
         mRealm = Realm.getDefaultInstance()
@@ -54,7 +54,7 @@ class HistoryActivity : AppCompatActivity(),Adapter.ViewHolder.ItemClickListener
     }
 
     fun readList(): RealmResults<Tasks> {
-        return mRealm.where(Tasks::class.java).findAll()
+        return mRealm.where(Tasks::class.java).findAll().sort("created_at",Sort.DESCENDING)
     }
 
     override fun onDestroy() {
@@ -87,8 +87,15 @@ class HistoryActivity : AppCompatActivity(),Adapter.ViewHolder.ItemClickListener
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                //ToDo 削除処理
-                adapter.notifyItemChanged(direction)
+                //adapter.notifyItemChanged(direction)
+                val target = mRealm.where(Tasks::class.java)
+                    .equalTo("id",read[viewHolder.adapterPosition].id)
+                    .findAll()
+
+                // トランザクションして削除
+                mRealm.executeTransaction {
+                    target.deleteFromRealm(0)
+                }
             }
 
             override fun onChildDraw(
@@ -136,4 +143,15 @@ class HistoryActivity : AppCompatActivity(),Adapter.ViewHolder.ItemClickListener
             }
             }
         })
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home ->{
+                finish()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
 }

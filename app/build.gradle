@@ -54,4 +54,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.preference:preference:1.0.0'
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
 }

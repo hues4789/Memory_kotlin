@@ -4,7 +4,7 @@
     <string name="term_3day">3day</string>
     <string name="term_7day">7day</string>
     <string name="term_1month">1month</string>
-    <string name="today">Today</string>
+    <string name="today">復習</string>
     <string name="create">登録</string>
     <string name="random">ランダム</string>
     <string name="random_name">数字ランダム表示</string>
@@ -19,7 +19,7 @@
     <string name="history">登録履歴</string>
     <string name="histories">履歴</string>
     <string name="input_no_char_error">文字を入力してください。</string>
-    <string name="added_task">追加しました</string>
+    <string name="added_task">追加しました。</string>
     <string name="e_mail">メールアドレス</string>
     <string name="password">パスワード</string>
     <string name="signup">新規登録</string>
@@ -33,4 +33,8 @@
     <string name="dif_pass">パスワードと確認用パスワードが異なります。</string>
     <string name="answer">詳細/答え</string>
     <string name="remember_task">タスク/問題</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="fromTo">~</string>
+    <string name="Start">Start</string>
 </resources>

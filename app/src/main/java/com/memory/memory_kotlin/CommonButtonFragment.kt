@@ -3,10 +3,14 @@ package com.memory.memory_kotlin
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.fragment_common_button.*
 
 
@@ -70,13 +74,44 @@ class CommonButtonFragment : Fragment() {
         btToday.setOnClickListener{onCommonButtonClick(it)}
         btCreate.setOnClickListener{onCommonButtonClick(it)}
         btHistory.setOnClickListener{onCommonButtonClick(it)}
+        btRandom.setOnClickListener{onCommonButtonClick(it)}
+
+        // Test App ID
+        MobileAds.initialize(activity, "ca-app-pub-1135677094589057/6842774244")
+
+        val adRequest: AdRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
+        // ad's lifecycle: loading, opening, closing, and so on
+        adView.adListener = object:AdListener(){
+            override fun onAdLoaded() {
+                Log.d("debug","Code to be executed when an ad finishes loading.");
+            }
+
+            override fun onAdFailedToLoad(errorCode : Int) {
+                Log.d("debug","Code to be executed when an ad request fails.");
+            }
+
+            override fun onAdOpened() {
+                Log.d("debug","Code to be executed when an ad opens an overlay that covers the screen.");
+            }
+
+            override fun onAdLeftApplication() {
+                Log.d("debug","Code to be executed when the user has left the app.");
+            }
+
+            override fun onAdClosed() {
+                Log.d("debug","Code to be executed when when the user is about to return to the app after tapping on an ad.");
+            }
+        }
+
     }
 
     private fun onCommonButtonClick(view: View?){
         if(view != null) {
             if(activity != null) {
                 //login画面の場合
-                if (activity!!.localClassName == "TodayToDoTaskLoginActivity" || activity!!.localClassName == "TaskCreateLoginActivity" || activity!!.localClassName == "HistoryLoginActivity") {
+                if (activity!!.localClassName == "TodayToDoTaskLoginActivity" || activity!!.localClassName == "TaskCreateLoginActivity" || activity!!.localClassName == "HistoryLoginActivity" ||activity!!.localClassName == "RandomLoginActivity") {
                     when (view.id) {
                         R.id.btToday -> {
                             val intent = Intent(activity, TodayToDoTaskLoginActivity::class.java)
@@ -88,6 +123,10 @@ class CommonButtonFragment : Fragment() {
                         }
                         R.id.btHistory -> {
                             val intent = Intent(activity, HistoryLoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                        R.id.btRandom -> {
+                            val intent = Intent(activity, RandomLoginActivity::class.java)
                             startActivity(intent)
                         }
                     }
@@ -104,6 +143,10 @@ class CommonButtonFragment : Fragment() {
                         }
                         R.id.btHistory -> {
                             val intent = Intent(activity, HistoryActivity::class.java)
+                            startActivity(intent)
+                        }
+                        R.id.btRandom -> {
+                            val intent = Intent(activity, RandomActivity::class.java)
                             startActivity(intent)
                         }
                     }

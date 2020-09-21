@@ -24,27 +24,6 @@ class LoginActivity : AppCompatActivity() {
         user = FirebaseAuth.getInstance().currentUser
 
 
-        SignUpButton.setOnClickListener {
-
-            val emailEditText = emailEditText
-            val emailText = emailEditText.text.toString()
-
-            val passEditText = passEditText
-            val passText = passEditText.text.toString()
-
-            auth.createUserWithEmailAndPassword(emailText, passText)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        onLoginButtonClick(it)
-                    } else {
-                        Toast.makeText(
-                            baseContext, "SignUp 失敗",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-        }
-
         btNoLogin.setOnClickListener{onLoginButtonClick(it)}
         SignUpButton.setOnClickListener{onLoginButtonClick(it)}
         LoginButton.setOnClickListener{onLoginButtonClick(it)}
@@ -77,6 +56,10 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(emailText, passText)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
+                                Toast.makeText(
+                                    baseContext, "ログインしました。",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 val intent = Intent(this, TodayToDoTaskLoginActivity::class.java)
                                 startActivity(intent)
                             } else {

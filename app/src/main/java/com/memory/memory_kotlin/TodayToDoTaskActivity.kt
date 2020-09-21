@@ -3,13 +3,11 @@ package com.memory.memory_kotlin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.realm.OrderedRealmCollection
-import io.realm.Realm
-import io.realm.RealmList
-import io.realm.RealmResults
+import io.realm.*
 import kotlinx.android.synthetic.main.list_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,6 +26,9 @@ class TodayToDoTaskActivity : AppCompatActivity(), Adapter.ViewHolder.ItemClickL
 
         setContentView(R.layout.activity_today_to_do_task)
 
+        //戻る
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         Realm.init(this)
         mRealm = Realm.getDefaultInstance()
 
@@ -45,7 +46,7 @@ class TodayToDoTaskActivity : AppCompatActivity(), Adapter.ViewHolder.ItemClickL
     private fun readList(): RealmResults<Tasks> {
 
         //振り返り日付間隔
-        val beforeDays :MutableList<Int> = arrayListOf(-1,-3,-7,-14)
+        val beforeDays :MutableList<Int> = arrayListOf(-1,-3,-7,-14,-31)
         //振り返り日付生成
         val remindDate = dateFormat(beforeDays)
 
@@ -57,7 +58,10 @@ class TodayToDoTaskActivity : AppCompatActivity(), Adapter.ViewHolder.ItemClickL
             .equalTo("remember_date",remindDate[2])
             .or()
             .equalTo("remember_date",remindDate[3])
+            .or()
+            .equalTo("remember_date",remindDate[4])
             .findAll()
+            .sort("created_at", Sort.DESCENDING)
     }
 
     override fun onDestroy() {
@@ -93,5 +97,15 @@ class TodayToDoTaskActivity : AppCompatActivity(), Adapter.ViewHolder.ItemClickL
         }
 
         return remindDateList
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home ->{
+                finish()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }

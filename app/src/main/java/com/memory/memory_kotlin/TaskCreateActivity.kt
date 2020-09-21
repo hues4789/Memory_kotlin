@@ -1,14 +1,19 @@
 package com.memory.memory_kotlin
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_task_create.*
 import java.util.*
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_random.*
 import java.text.SimpleDateFormat
 
 class TaskCreateActivity : AppCompatActivity() {
@@ -21,6 +26,9 @@ class TaskCreateActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.create)
 
         setContentView(R.layout.activity_task_create)
+
+        //戻る
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         Realm.init(this)
         mRealm = Realm.getDefaultInstance()
@@ -52,6 +60,12 @@ private fun create(task:String,detailsTask:String){
                 .setActionTextColor(Color.YELLOW)
                 .show()
                 }
+        //キーボードを閉じる
+        hideKeyboard(view)
+
+        //入力欄を空にする
+        newTask.setText("", TextView.BufferType.NORMAL)
+        detailsTask.setText("", TextView.BufferType.NORMAL)
     }
 
     override fun onDestroy() {
@@ -64,5 +78,22 @@ private fun create(task:String,detailsTask:String){
         val formatDate = SimpleDateFormat("yyyy/MM/dd")
         val date = Date()
         return formatDate.format(date).toString()
+    }
+
+    private fun hideKeyboard(view:View?) {
+        if(view != null) {
+            val manager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home ->{
+                finish()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }

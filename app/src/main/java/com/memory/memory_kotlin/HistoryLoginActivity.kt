@@ -1,6 +1,9 @@
 package com.memory.memory_kotlin
 
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat
@@ -8,12 +11,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.fragment_common_button.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.ItemClickListener  {
@@ -22,6 +28,7 @@ class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.Ite
     private var currentUser: FirebaseUser? = null
 
     private var taskList:MutableList<TasksFirebase> = ArrayList<TasksFirebase>()
+    private var documentIdList:MutableList<String> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +38,9 @@ class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.Ite
 
         auth = FirebaseAuth.getInstance()
         currentUser = FirebaseAuth.getInstance().currentUser
+
+        //戻る
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setContentView(R.layout.activity_today_to_do_task)
 
@@ -45,6 +55,11 @@ class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.Ite
             //降順
             .orderBy(TasksFirebase::created_at.name, Query.Direction.DESCENDING)
             .get()
+            .addOnSuccessListener { documents ->
+                for(document in documents){
+                    documentIdList.add(document.id)
+                }
+            }
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     if(it.result != null){
@@ -53,6 +68,12 @@ class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.Ite
                         recyclerView.setHasFixedSize(true)
                         recyclerView.layoutManager = LinearLayoutManager(this)
                         recyclerView.adapter = adapter
+
+                        val swipeToDismissTouchHelper by lazy {
+                            getSwipeToDismissTouchHelper(adapter)
+                        }
+
+                        swipeToDismissTouchHelper.attachToRecyclerView(recyclerView)
                     }
                 } else {
                     Toast.makeText(applicationContext,"今日のタスクはありません。", Toast.LENGTH_LONG).show()
@@ -89,7 +110,81 @@ class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.Ite
                 startActivity(intent)
                 return true
             }
+            android.R.id.home ->{
+                finish()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
+    private fun getSwipeToDismissTouchHelper(adapter: TaskLoginRecyclerAdapter) =
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.ACTION_STATE_IDLE,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                //DB削除
+                val db = FirebaseFirestore.getInstance()
+                db.collection("Tasks")
+                    .document(documentIdList[viewHolder.adapterPosition])
+                    .delete()
+
+                val intent = Intent(this@HistoryLoginActivity, HistoryLoginActivity::class.java)
+                startActivity(intent)
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                if(dX<0) {
+                    super.onChildDraw(
+                        c,
+                        recyclerView,
+                        viewHolder,
+                        dX,
+                        dY,
+                        actionState,
+                        isCurrentlyActive
+                    )
+                    val itemView = viewHolder.itemView
+                    val background = ColorDrawable(Color.RED)
+                    val deleteIcon = AppCompatResources.getDrawable(
+                        this@HistoryLoginActivity,
+                        R.drawable.ic_baseline_delete_24
+                    )
+                    val iconMarginVertical =
+                        (viewHolder.itemView.height - deleteIcon!!.intrinsicHeight) / 2
+
+                    deleteIcon.setBounds(
+                        itemView.left + iconMarginVertical,
+                        itemView.top + iconMarginVertical,
+                        itemView.left + iconMarginVertical + deleteIcon.intrinsicWidth,
+                        itemView.bottom - iconMarginVertical
+                    )
+                    background.setBounds(
+                        itemView.left,
+                        itemView.top,
+                        itemView.right + dX.toInt(),
+                        itemView.bottom
+                    )
+                    background.draw(c)
+                    deleteIcon.draw(c)
+                }
+            }
+        })
 }
