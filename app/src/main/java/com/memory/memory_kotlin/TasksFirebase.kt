@@ -1,6 +1,5 @@
 package com.memory.memory_kotlin
 
-import com.google.firebase.auth.FirebaseUser
 import java.util.*
 
 data class TasksFirebase (

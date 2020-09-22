@@ -50,7 +50,7 @@ private fun create(task:String,detailsTask:String){
     private fun onCreateTaskButtonClick(view: View?){
         if(view != null) {
             if(newTask.text.toString().isEmpty()) {
-                errorText.text = getText(R.string.input_no_char_error)
+                newTask.error = getText(R.string.input_no_char_error)
                 return
             }
             //DB登録

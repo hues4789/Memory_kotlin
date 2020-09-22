@@ -54,10 +54,10 @@ class RandomLoginActivity : AppCompatActivity() {
     fun onRandomStartClick(view: View?){
         if(FromNum.text.isEmpty()|| ToNum.text.isEmpty()){
             if(FromNum.text.isEmpty()) {
-                FromNum.error = "入力して下さい。"
+                FromNum.error = getString(R.string.please_input)
             }
             if(ToNum.text.isEmpty()) {
-                ToNum.error = "入力して下さい。"
+                ToNum.error = getString(R.string.please_input)
             }
             return
         }
@@ -67,8 +67,8 @@ class RandomLoginActivity : AppCompatActivity() {
         val toNum = ToNum.text.toString()
 
         if(Integer.parseInt(fromNum) >= Integer.parseInt(toNum) ){
-            FromNum.error = "大小が正しくありません。。"
-            ToNum.error = "大小が正しくありません。"
+            FromNum.error = getString(R.string.big_small_check)
+            ToNum.error = getString(R.string.big_small_check)
             return
         }
 

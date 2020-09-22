@@ -57,7 +57,7 @@ class SignUpActivity : AppCompatActivity() {
                             baseContext, "登録しました。",
                             Toast.LENGTH_SHORT
                         ).show()
-                        val intent = Intent(this, TodayToDoTaskActivity::class.java)
+                        val intent = Intent(this, TodayToDoTaskLoginActivity::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(

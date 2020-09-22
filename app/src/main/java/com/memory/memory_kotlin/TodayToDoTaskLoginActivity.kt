@@ -45,7 +45,7 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
         val loginId = auth.uid.toString()
 
         //振り返り日付間隔
-        val beforeDays :MutableList<Int> = arrayListOf(-1,-3,-7,-14,-31)
+        val beforeDays :MutableList<Int> = arrayListOf(-1,-4,-11,-25,-56)
         //振り返り日付生成
         val remindDate = dateFormat(beforeDays)
 

@@ -7,18 +7,14 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.list_item.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -66,37 +62,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.LoginButton -> {
-                    //Todo funを分ける
-                    val emailText = emailEditText.text.toString()
-
-                    val passText = passEditText.text.toString()
-
-                    if(emailText.isEmpty() || passText.isEmpty()){
-                        if(emailText.isEmpty()){
-                            emailEditText.error = getString(R.string.input_mail)
-                        }
-                        if(passText.isEmpty()){
-                            passEditText.error = getString(R.string.input_pass)
-                        }
-                        return
-                    }
-
-                    auth.signInWithEmailAndPassword(emailText, passText)
-                        .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                Toast.makeText(
-                                    baseContext, "ログインしました。",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                val intent = Intent(this, TodayToDoTaskLoginActivity::class.java)
-                                startActivity(intent)
-                            } else {
-                                Toast.makeText(
-                                    baseContext, "Login 失敗",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+                    onLoginClick()
                 }
                 R.id.SignUpButton -> {
                     val intent = Intent(this, SignUpActivity::class.java)
@@ -149,6 +115,43 @@ class LoginActivity : AppCompatActivity() {
 
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(
+                        baseContext, "Login 失敗",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
+
+    fun onLoginClick(){
+        val emailText = emailEditText.text.toString()
+
+        val passText = passEditText.text.toString()
+
+        if(emailText.isEmpty() || passText.isEmpty()){
+            if(emailText.isEmpty()){
+                emailEditText.error = getString(R.string.input_mail)
+            }
+            if(passText.isEmpty()){
+                passEditText.error = getString(R.string.input_pass)
+            }
+            return
+        }
+
+        auth.signInWithEmailAndPassword(emailText, passText)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        baseContext, "ログインしました。",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val intent = Intent(this, TodayToDoTaskLoginActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(
+                        baseContext, "Login 失敗",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
