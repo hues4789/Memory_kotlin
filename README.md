@@ -11,7 +11,7 @@ firebaseを利用しているので、友達とも共有が可能です。
 - Firebase
   - Authentication
   - Cloud Firestore
--　Preference 1.0.0
+- Preference 1.0.0
 - Espresso 3.0.2
 
 # 機能一覧  
