@@ -16,10 +16,10 @@ firebaseを利用しているので、友達とも共有が可能です。
 
 # 機能一覧  
 - ログイン機能(firebase-Authentication)
-- 復習機能(Realm,firebase-Cloud Firestore)
-- 履歴機能(Realm,firebase-Cloud Firestore)
-- 登録機能(Realm,firebase-Cloud Firestore)
-- ランダム機能(共有プリファレンス)  
+- 復習機能(Realm,firebase-Cloud Firestore,フラグメント)
+- 履歴機能(Realm,firebase-Cloud Firestore,フラグメント)
+- 登録機能(Realm,firebase-Cloud Firestore,フラグメント)
+- ランダム機能(共有プリファレンス,フラグメント)  
 
 # テスト
 - Espresso
