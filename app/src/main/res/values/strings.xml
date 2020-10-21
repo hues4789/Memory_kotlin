@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Memory</string>
+    <string name="app_name">Umemory</string>
     <string name="term_1day">1day</string>
     <string name="term_3day">3day</string>
     <string name="term_7day">7day</string>

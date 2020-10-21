@@ -56,8 +56,8 @@ class CommonButtonFragment : Fragment() {
         btHistory.setOnClickListener{onCommonButtonClick(it)}
         btRandom.setOnClickListener{onCommonButtonClick(it)}
 
-        // Test App ID
-        MobileAds.initialize(activity, "ca-app-pub-1135677094589057/6842774244")
+        // App ID
+        MobileAds.initialize(activity){}
 
         val adRequest: AdRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
