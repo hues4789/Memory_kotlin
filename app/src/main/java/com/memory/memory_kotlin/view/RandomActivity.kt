@@ -1,30 +1,31 @@
-package com.memory.memory_kotlin
+package com.memory.memory_kotlin.view
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.ArrayMap
-import android.view.Menu
 import android.view.MenuItem
-import android.view.TextureView
 import androidx.preference.PreferenceManager
 
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import androidx.databinding.DataBindingUtil
+import com.memory.memory_kotlin.R
+import com.memory.memory_kotlin.contract.RandomViewContract
+import com.memory.memory_kotlin.databinding.ActivityRandomBinding
+import com.memory.memory_kotlin.viewmodel.RandomViewModel
 import kotlinx.android.synthetic.main.activity_random.*
-import kotlinx.android.synthetic.main.fragment_common_button.*
 import java.util.*
 
-class RandomActivity : AppCompatActivity() {
+class RandomActivity : AppCompatActivity(), RandomViewContract {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_random)
+
+        val binding :ActivityRandomBinding= DataBindingUtil.setContentView(this, R.layout.activity_random)
+        binding.viewModel = RandomViewModel(this as RandomViewContract,this.application)
 
         supportActionBar?.title = getString(R.string.random)
 
@@ -32,7 +33,7 @@ class RandomActivity : AppCompatActivity() {
         init()
 
         //Random数生成
-        btRandomStart.setOnClickListener{onRandomStartClick(it)}
+/*        btRandomStart.setOnClickListener{onRandomStartClick(it)}*/
 
         //戻る
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -50,7 +51,7 @@ class RandomActivity : AppCompatActivity() {
     }
 
 
-    fun onRandomStartClick(view: View?){
+/*    fun onRandomStartClick(view: View?){
         if(FromNum.text.isEmpty()|| ToNum.text.isEmpty()){
             if(FromNum.text.isEmpty()) {
                 FromNum.error = getString(R.string.please_input)
@@ -94,7 +95,7 @@ class RandomActivity : AppCompatActivity() {
         editor.putInt("TO_NUM",ToNum)
 
         editor.apply()
-    }
+    }*/
     private fun getRandomNum() :Map<String,Int> {
         var configNum: MutableMap<String, Int> = ArrayMap()
         //Preference取得
@@ -104,12 +105,7 @@ class RandomActivity : AppCompatActivity() {
         return configNum
     }
 
-    private fun hideKeyboard(view:View?) {
-        if(view != null) {
-            val manager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            manager.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home ->{
@@ -117,6 +113,30 @@ class RandomActivity : AppCompatActivity() {
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    override  fun noFromNumError(){
+        FromNum.error = getString(R.string.please_input)
+    }
+
+    override fun noToNumError(){
+        ToNum.error = getString(R.string.please_input)
+    }
+
+    override fun bigSmallCheckError(){
+        FromNum.error = getString(R.string.big_small_check)
+        ToNum.error = getString(R.string.big_small_check)
+    }
+    override  fun removeError() {
+        FromNum.error = null
+        ToNum.error = null
+    }
+
+    override fun hideKeyboard(view:View?) {
+        if(view != null) {
+            val manager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 }

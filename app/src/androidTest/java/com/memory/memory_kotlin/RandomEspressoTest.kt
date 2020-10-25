@@ -2,15 +2,13 @@ package com.memory.memory_kotlin
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ReplaceTextAction
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.rule.ActivityTestRule
+import com.memory.memory_kotlin.view.RandomActivity
 import org.junit.Rule
 import org.junit.Test
-import java.util.regex.Pattern.matches
 
 class RandomEspressoTest {
     @Rule

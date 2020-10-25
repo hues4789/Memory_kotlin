@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.fragment_common_button.*
+import com.memory.memory_kotlin.view.TaskLoginRecyclerAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.ItemClickListener  {
@@ -64,7 +64,12 @@ class HistoryLoginActivity : AppCompatActivity(),TaskLoginRecyclerViewHolder.Ite
                 if (it.isSuccessful) {
                     if(it.result != null){
                         taskList = it.result!!.toObjects(TasksFirebase::class.java)
-                        val adapter = TaskLoginRecyclerAdapter(this,this,taskList)
+                        val adapter =
+                            TaskLoginRecyclerAdapter(
+                                this,
+                                this,
+                                taskList
+                            )
                         recyclerView.setHasFixedSize(true)
                         recyclerView.layoutManager = LinearLayoutManager(this)
                         recyclerView.adapter = adapter

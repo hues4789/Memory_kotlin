@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.memory.memory_kotlin.view.TaskLoginRecyclerAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,7 +62,12 @@ class TodayToDoTaskLoginActivity() : AppCompatActivity(),TaskLoginRecyclerViewHo
                 if (it.isSuccessful) {
                     if(it.result != null){
                         taskList = it.result!!.toObjects(TasksFirebase::class.java)
-                        val adapter = TaskLoginRecyclerAdapter(this,this,taskList)
+                        val adapter =
+                            TaskLoginRecyclerAdapter(
+                                this,
+                                this,
+                                taskList
+                            )
                         recyclerView.setHasFixedSize(true)
                         recyclerView.layoutManager = LinearLayoutManager(this)
                         recyclerView.adapter = adapter

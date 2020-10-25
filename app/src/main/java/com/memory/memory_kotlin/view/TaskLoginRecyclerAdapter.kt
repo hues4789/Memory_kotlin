@@ -1,4 +1,4 @@
-package com.memory.memory_kotlin
+package com.memory.memory_kotlin.view
 
 import android.content.Context
 import android.text.format.DateFormat
@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.memory.memory_kotlin.R
+import com.memory.memory_kotlin.TaskLoginRecyclerViewHolder
+import com.memory.memory_kotlin.TasksFirebase
 
 class TaskLoginRecyclerAdapter(private val context: Context,
                                private val itemClickListener: TaskLoginRecyclerViewHolder.ItemClickListener,

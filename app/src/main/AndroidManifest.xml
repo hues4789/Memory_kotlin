@@ -13,7 +13,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1135677094589057~4982897664"/>
         <activity android:name=".RandomLoginActivity"></activity>
-        <activity android:name=".RandomActivity" />
+        <activity android:name=".view.RandomActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".HistoryLoginActivity" />
         <activity android:name=".LoginActivity" />

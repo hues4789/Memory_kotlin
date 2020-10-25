@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.memory.memory_kotlin.viewmodel.RandomViewModel"/>
+    </data>
+<LinearLayout
 android:id="@+id/layout_main"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
@@ -34,7 +41,8 @@ android:orientation="vertical">
             android:hint="@string/from"
             android:inputType="number"
             android:maxLength="3"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:text="@{viewModel.FromNum}" />
 
         <TextView
             android:id="@+id/ToFrom"
@@ -54,7 +62,8 @@ android:orientation="vertical">
             android:hint="@string/to"
             android:inputType="number"
             android:maxLength="3"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:text="@{viewModel.ToNum}" />
     </LinearLayout>
         <Button
             android:id="@+id/btRandomStart"
@@ -65,14 +74,15 @@ android:orientation="vertical">
             android:layout_marginTop="32dp"
             android:background="@color/design_default_color_primary_variant"
             android:text="@string/Start"
-            android:textColor="@color/design_default_color_background" />
+            android:textColor="@color/design_default_color_background"
+            android:onClick="@{viewModel::onRandomStartClick}"/>
        <TextView
             android:id="@+id/RandomNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
             android:textAlignment="center"
-            android:textSize="200dp" />
+            android:textSize="200dp"
+            android:text="@{viewModel.RandomNum}"/>
     </LinearLayout>
 
 
@@ -84,5 +94,5 @@ android:orientation="vertical">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:layout="@layout/fragment_common_button" />
-<!-- 画面下部に固定で表示されるレイアウト -->
 </LinearLayout>
+</layout>
