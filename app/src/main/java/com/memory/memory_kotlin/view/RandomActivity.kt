@@ -3,7 +3,6 @@ package com.memory.memory_kotlin.view
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.util.ArrayMap
 import android.view.MenuItem
 import androidx.preference.PreferenceManager
@@ -17,7 +16,6 @@ import com.memory.memory_kotlin.contract.RandomViewContract
 import com.memory.memory_kotlin.databinding.ActivityRandomBinding
 import com.memory.memory_kotlin.viewmodel.RandomViewModel
 import kotlinx.android.synthetic.main.activity_random.*
-import java.util.*
 
 class RandomActivity : AppCompatActivity(), RandomViewContract {
 
@@ -25,9 +23,16 @@ class RandomActivity : AppCompatActivity(), RandomViewContract {
         super.onCreate(savedInstanceState)
 
         val binding :ActivityRandomBinding= DataBindingUtil.setContentView(this, R.layout.activity_random)
-        binding.viewModel = RandomViewModel(this as RandomViewContract,this.application)
+        val randomViewModel = RandomViewModel(this as RandomViewContract,this.application)
+        binding.viewModel = randomViewModel
+        binding.lifecycleOwner = this
 
         supportActionBar?.title = getString(R.string.random)
+
+        btRandomStart.setOnClickListener {
+            val text = FromNum.toString()
+            randomViewModel.submitText(text)
+        }
 
         //Random値を設定
         init()
@@ -37,6 +42,11 @@ class RandomActivity : AppCompatActivity(), RandomViewContract {
 
         //戻る
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        btRandomStart.setOnClickListener {
+            val fromNumVal = FromNum.toString()
+            randomViewModel.submitText(fromNumVal)
+        }
+
     }
 
     fun init(){
@@ -49,6 +59,8 @@ class RandomActivity : AppCompatActivity(), RandomViewContract {
         ToNum.setText(toNum.toString(), TextView.BufferType.NORMAL)
 
     }
+
+
 
 
 /*    fun onRandomStartClick(view: View?){
@@ -134,7 +146,7 @@ class RandomActivity : AppCompatActivity(), RandomViewContract {
     }
 
     override fun hideKeyboard(view:View?) {
-        if(view != null) {
+        if (view != null) {
             val manager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(view.windowToken, 0)
         }
