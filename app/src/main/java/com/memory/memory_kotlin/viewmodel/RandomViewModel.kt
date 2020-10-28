@@ -2,7 +2,9 @@ package com.memory.memory_kotlin.viewmodel
 
 import android.app.Application
 import android.provider.Settings.System.getString
+import android.util.ArrayMap
 import android.view.View
+import android.widget.TextView
 import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
@@ -11,6 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.memory.memory_kotlin.R
 import com.memory.memory_kotlin.contract.RandomViewContract
+import com.memory.memory_kotlin.model.RandomService
 import kotlinx.android.synthetic.main.activity_random.*
 import java.util.*
 
@@ -18,18 +21,21 @@ class RandomViewModel(randomView:RandomViewContract,application: Application) :A
     private var randomView : RandomViewContract = randomView
     private var context = getApplication<Application>().applicationContext
     var _FromNum = MutableLiveData<String>("")
-    val ToNum = ObservableField<String>("")
+    val _ToNum = MutableLiveData<String>("")
     val RandomNum = ObservableField<String>("")
 
     val FromNum :LiveData<String>get() = _FromNum
+    val ToNum :LiveData<String>get() = _ToNum
+
+    var randomService = RandomService()
 
 
     fun onRandomStartClick(view: View?){
-        if(FromNum.value?.isEmpty()!! || ToNum.get()?.isEmpty()!!){
+        if(FromNum.value?.isEmpty()!! || ToNum.value?.isEmpty()!!){
             if(FromNum.value?.isEmpty()!!) {
                 randomView.noFromNumError()
             }
-            if(ToNum.get()?.isEmpty()!!) {
+            if(ToNum.value?.isEmpty()!!) {
                 randomView.noToNumError()
             }
             return
@@ -37,7 +43,7 @@ class RandomViewModel(randomView:RandomViewContract,application: Application) :A
 
 
         val fromNum = FromNum.value.toString()
-        val toNum = ToNum.get().toString()
+        val toNum = ToNum.value.toString()
 
         if(Integer.parseInt(fromNum) >= Integer.parseInt(toNum) ){
             randomView.bigSmallCheckError()
@@ -47,7 +53,7 @@ class RandomViewModel(randomView:RandomViewContract,application: Application) :A
         randomView.removeError()
 
         //preference登録
-        saveRandomNum(Integer.parseInt(fromNum),Integer.parseInt(toNum))
+        randomService.saveRandomNum(Integer.parseInt(fromNum),Integer.parseInt(toNum),context)
 
         //ランダム数を作成
         val random = Random()
@@ -59,17 +65,20 @@ class RandomViewModel(randomView:RandomViewContract,application: Application) :A
         randomView.hideKeyboard(view)
     }
 
-    private fun saveRandomNum(fromNum:Int,ToNum:Int){
-        //Preference登録
-        val pref = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = pref.edit()
-        editor.putInt("FROM_NUM",fromNum)
-        editor.putInt("TO_NUM",ToNum)
+    fun initSetNum(){
+        val randomConfigNum :Map<String,Int> = randomService.getRandomNum(context)
+        val fromNum = randomConfigNum["from"]
+        val toNum = randomConfigNum["to"]
 
-        editor.apply()
+        //取得した値を設定
+        _FromNum.value = fromNum.toString()
+        _ToNum.value = toNum.toString()
     }
 
-    fun submitText(text:String){
-        _FromNum.value = text
+    fun setFromNum(fromNum:String){
+        _FromNum.value = fromNum
+    }
+    fun setToNum(toNum:String){
+        _ToNum.value = toNum
     }
 }

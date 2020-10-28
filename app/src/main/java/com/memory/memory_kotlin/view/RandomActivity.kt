@@ -3,6 +3,8 @@ package com.memory.memory_kotlin.view
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.ArrayMap
 import android.view.MenuItem
 import androidx.preference.PreferenceManager
@@ -29,94 +31,36 @@ class RandomActivity : AppCompatActivity(), RandomViewContract {
 
         supportActionBar?.title = getString(R.string.random)
 
-        btRandomStart.setOnClickListener {
-            val text = FromNum.toString()
-            randomViewModel.submitText(text)
-        }
+        FromNum.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //ここでBinding#viewmodelを参照
+                if (s != null) {
+                    binding.viewModel?.setFromNum(s.toString())
+                }
+            }
+        })
+        ToNum.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //ここでBinding#viewmodelを参照
+                if (s != null) {
+                    binding.viewModel?.setToNum(s.toString())
+                }
+            }
+        })
 
         //Random値を設定
-        init()
-
-        //Random数生成
-/*        btRandomStart.setOnClickListener{onRandomStartClick(it)}*/
+        binding.viewModel?.initSetNum()
 
         //戻る
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        btRandomStart.setOnClickListener {
-            val fromNumVal = FromNum.toString()
-            randomViewModel.submitText(fromNumVal)
-        }
 
     }
-
-    fun init(){
-        val randomConfigNum :Map<String,Int> = getRandomNum()
-        val fromNum = randomConfigNum["from"]
-        val toNum = randomConfigNum["to"]
-
-        //取得した値を設定
-        FromNum.setText(fromNum.toString(), TextView.BufferType.NORMAL)
-        ToNum.setText(toNum.toString(), TextView.BufferType.NORMAL)
-
-    }
-
-
-
-
-/*    fun onRandomStartClick(view: View?){
-        if(FromNum.text.isEmpty()|| ToNum.text.isEmpty()){
-            if(FromNum.text.isEmpty()) {
-                FromNum.error = getString(R.string.please_input)
-            }
-            if(ToNum.text.isEmpty()) {
-                ToNum.error = getString(R.string.please_input)
-            }
-            return
-        }
-
-
-        val fromNum = FromNum.text.toString()
-        val toNum = ToNum.text.toString()
-
-        if(Integer.parseInt(fromNum) >= Integer.parseInt(toNum) ){
-            FromNum.error = getString(R.string.big_small_check)
-            ToNum.error = getString(R.string.big_small_check)
-            return
-        }
-
-        FromNum.error = null
-        ToNum.error = null
-
-        //preference登録
-        saveRandomNum(Integer.parseInt(fromNum),Integer.parseInt(toNum))
-
-       //ランダム数を作成
-        val random = Random()
-        val randomNum = random.nextInt(Integer.parseInt(toNum) - Integer.parseInt(fromNum)+1) + Integer.parseInt(fromNum)
-
-        //ランダム数を出力
-        RandomNum.text = randomNum.toString()
-
-        hideKeyboard(view)
-    }
-    private fun saveRandomNum(fromNum:Int,ToNum:Int){
-        //Preference登録
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor = pref.edit()
-        editor.putInt("FROM_NUM",fromNum)
-        editor.putInt("TO_NUM",ToNum)
-
-        editor.apply()
-    }*/
-    private fun getRandomNum() :Map<String,Int> {
-        var configNum: MutableMap<String, Int> = ArrayMap()
-        //Preference取得
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        configNum["from"] = pref.getInt("FROM_NUM", 0)
-        configNum["to"] = pref.getInt("TO_NUM", 100)
-        return configNum
-    }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
