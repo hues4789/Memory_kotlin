@@ -21,7 +21,7 @@
         <activity android:name=".TodayToDoTaskLoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".TodayToDoTaskActivity" />
-        <activity android:name=".TaskCreateActivity" />
+        <activity android:name=".view.TaskCreateActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

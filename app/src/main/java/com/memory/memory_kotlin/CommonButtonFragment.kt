@@ -10,6 +10,7 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.memory.memory_kotlin.view.RandomActivity
+import com.memory.memory_kotlin.view.TaskCreateActivity
 import kotlinx.android.synthetic.main.fragment_common_button.*
 
 

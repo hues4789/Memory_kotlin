@@ -1,20 +1,14 @@
 package com.memory.memory_kotlin
 
-import android.view.View
-import android.widget.EditText
-import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
-import kotlinx.android.synthetic.main.activity_task_create.*
-import org.hamcrest.TypeSafeMatcher
+import com.memory.memory_kotlin.view.TaskCreateActivity
 import org.junit.Rule
 import org.junit.Test
-import java.util.regex.Matcher
 
 class TaskCreateEspressoTest {
 

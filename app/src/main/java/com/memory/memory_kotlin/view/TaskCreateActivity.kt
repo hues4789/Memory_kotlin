@@ -1,7 +1,6 @@
-package com.memory.memory_kotlin
+package com.memory.memory_kotlin.view
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +12,8 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_task_create.*
 import java.util.*
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_random.*
+import com.memory.memory_kotlin.R
+import com.memory.memory_kotlin.Tasks
 import java.text.SimpleDateFormat
 
 class TaskCreateActivity : AppCompatActivity() {
